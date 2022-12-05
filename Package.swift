@@ -20,6 +20,11 @@ let package = Package(
         .target(name: "UBLocalNetworking"),
         .testTarget(
             name: "UBLocalNetworkingTests",
-            dependencies: ["UBLocalNetworking"]),
+            dependencies: ["UBLocalNetworking"],
+            resources: [
+                .copy("Resources")
+            ]
+        ),
+        
     ]
 )

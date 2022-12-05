@@ -24,6 +24,7 @@
 import XCTest
 import Combine
 import UBLocalNetworking
+import Foundation
 
 final class LocalServerTests: XCTestCase {
 
@@ -66,6 +67,32 @@ final class LocalServerTests: XCTestCase {
         let jhon = Person(name: "Jhon", age: 31)
         let jhonString = "{\"name\": \"Jhon\", \"age\": 31}"
         try BasicResponseProvider(rule: #"https://.*/persons/.*"#, body: jhonString).addToLocalServer()
+
+        let ex = expectation(description: "Loading")
+        let task = URLSession.shared.dataTaskPublisher(for: URL(string: "https://int.ubique.ch/persons/123")!)
+            .map({ $0.data })
+            .decode(type: Person.self, decoder: JSONDecoder())
+            .sink { completion in
+                switch completion {
+                    case .finished: ex.fulfill()
+                    case .failure(let error): XCTFail(error.localizedDescription)
+                }
+            } receiveValue: { person in
+                XCTAssertEqual(person, jhon)
+            }
+
+        waitForExpectations(timeout: 10)
+        task.cancel()
+    }
+
+    func testFile() throws {
+        let jhon = Person(name: "Jhon", age: 31)
+        guard let jsonUrl = Bundle.module.url(forResource: "Resources/test", withExtension: "json") else {
+            XCTFail("Could not load JSON")
+            return
+        }
+        
+        try BasicResponseProvider(rule: #"https://.*/persons/.*"#, body: jsonUrl).addToLocalServer()
 
         let ex = expectation(description: "Loading")
         let task = URLSession.shared.dataTaskPublisher(for: URL(string: "https://int.ubique.ch/persons/123")!)

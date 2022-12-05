@@ -122,6 +122,12 @@ extension String: ResponseProviderBody {
     }
 }
 
+extension URL: ResponseProviderBody {
+    public func body(for request: URLRequest) async throws -> Data {
+        try Data(contentsOf: self)
+    }
+}
+
 extension BasicResponseProvider {
     /// A header implementation of a response provider
     public struct Header: ResponseProviderHeader {
