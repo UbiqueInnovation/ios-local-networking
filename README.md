@@ -37,7 +37,7 @@ class MyViewController: UIViewController {
         super.viewDidLoad()
 
         // Start the server
-        LocalServer.resumeLocalServer()
+        LocalServer.resumeLocalServerOnSharedSession()
 
         // The object that you wish to send
         let jhon = Person(name: "Jhon", age: 31)

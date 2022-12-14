@@ -29,7 +29,7 @@ import Foundation
 final class LocalServerTests: XCTestCase {
 
     override func setUp() {
-        LocalServer.resumeLocalServer()
+        LocalServer.resumeLocalServerOnSharedSession()
     }
 
     override func tearDown() {

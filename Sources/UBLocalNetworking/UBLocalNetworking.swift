@@ -34,8 +34,8 @@ public class LocalServer {
 
     private init() {}
 
-    /// Starts intercepting requests
-    public static func resumeLocalServer() {
+    /// Starts intercepting requests. Only request on URLSession.shared will be intercepted
+    public static func resumeLocalServerOnSharedSession() {
         URLProtocol.registerClass(LocalServerImpl.self)
     }
 
