@@ -26,6 +26,7 @@ import Combine
 import UBLocalNetworking
 import Foundation
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 final class LocalServerTests: XCTestCase {
 
     override func setUp() {

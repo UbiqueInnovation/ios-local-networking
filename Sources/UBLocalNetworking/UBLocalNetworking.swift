@@ -30,6 +30,7 @@ import Foundation
 /// only itercept requests and do not interfere with any other system
 ///
 /// - Note: It will intercept all URL requests even ones that are issues by 3rd parties
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public class LocalServer {
 
     private init() {}
@@ -78,6 +79,7 @@ public class LocalServer {
 }
 
 /// An implementation of URLProtocol
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public final class LocalServerURLProtocol: URLProtocol {
 
     /// The provider associated with this copy of the interceptor

@@ -24,6 +24,7 @@
 import Foundation
 
 /// A basic implementation of a response provider
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public struct BasicResponseProvider: RegexRuleResponseProvider {
     public let id = UUID()
 
@@ -65,6 +66,7 @@ public struct BasicResponseProvider: RegexRuleResponseProvider {
 
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension BasicResponseProvider {
     /// Creates a response provider that returns JSON objects
     /// - Parameters:
@@ -104,30 +106,35 @@ extension BasicResponseProvider {
 
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension Int: ResponseProviderHeader {
     public func response(for request: URLRequest) async throws -> HTTPURLResponse {
         try await BasicResponseProvider.Header(statusCode: self).response(for: request)
     }
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension Data: ResponseProviderBody {
     public func body(for request: URLRequest) async throws -> Data {
         self
     }
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension String: ResponseProviderBody {
     public func body(for request: URLRequest) async throws -> Data {
         data(using: .utf8)!
     }
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension URL: ResponseProviderBody {
     public func body(for request: URLRequest) async throws -> Data {
         try Data(contentsOf: self)
     }
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension BasicResponseProvider {
     /// A header implementation of a response provider
     public struct Header: ResponseProviderHeader {

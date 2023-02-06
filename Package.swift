@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "UBLocalNetworking",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v11),
         .macOS(.v11),
         .watchOS(.v8),
         .tvOS(.v13)

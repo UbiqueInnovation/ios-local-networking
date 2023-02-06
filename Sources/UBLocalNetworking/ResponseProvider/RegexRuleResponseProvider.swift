@@ -24,11 +24,13 @@
 import Foundation
 
 /// A response provider that validates
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public protocol RegexRuleResponseProvider: ResponseProvider {
     /// A rule to check for matching requests
     var rule: RegexRule { get }
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension RegexRuleResponseProvider {
     public func canHandle(request: URLRequest) -> Bool {
         guard let url = request.url?.absoluteString else {

@@ -24,6 +24,7 @@
 import Foundation
 
 /// Provides a response header
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public protocol ResponseProviderHeader {
     /// Returns an `HTTPURLResponse` in response to a `URLRequest`
     /// - Parameter request: The request that needs a response
@@ -32,6 +33,7 @@ public protocol ResponseProviderHeader {
 }
 
 /// Provides a response body
+@available(iOS 11.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public protocol ResponseProviderBody {
     /// Returns a `Data` in response to a `URLRequest`
     /// - Parameter request: The request that needs a response body
@@ -40,6 +42,7 @@ public protocol ResponseProviderBody {
 }
 
 /// Provides a response
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public protocol ResponseProvider: ResponseProviderHeader, ResponseProviderBody {
     /// Uniquely identifies a provider
     var id: UUID { get }
@@ -50,6 +53,7 @@ public protocol ResponseProvider: ResponseProviderHeader, ResponseProviderBody {
     func canHandle(request: URLRequest) -> Bool
 }
 
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 extension ResponseProvider {
     /// Adds the provider to the local server
     public func addToLocalServer() {
