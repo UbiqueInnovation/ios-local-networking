@@ -28,6 +28,8 @@ If you prefer not to use either of the aforementioned dependency managers, you c
 
 ### Quick Start
 
+If the request runs on the `URLSession.shared`, use this method:
+
 ```swift
 import UBLocalNetworking
 
@@ -56,6 +58,14 @@ class MyViewController: UIViewController {
 }
 ```
 
+If using a custom session, register the `LocalServerURLProtocol` as such:
+
+```swift
+let configuration = URLSessionConfiguration.default
+configuration.protocolClasses = [LocalServerURLProtocol.self]
+let urlSession = URLSession(configuration: configuration)
+```
+
 ### Pausing and Cleanup
 
 You can at any time pause the server so that requests go through the normal flow.
@@ -75,6 +85,8 @@ class MyViewController: UIViewController {
 Alternatively if you wish to remove a response provider that you don't need anymore, you can call 
 `LocalServer.remove(responseProvider: ResponseProvider)` or to remove all providers `LocalServer.removeAllResponseProviders()`
 
+If using custom `URLSession`, it is up to you to recreate the session to remove registered `LocalServerURLProtocol`.
+ 
 ### Cusomization and Features
 
 All the power of customization lies in the `ResponseProvider` protocol. This is an asynchronous interface allowing you

@@ -36,12 +36,12 @@ public class LocalServer {
 
     /// Starts intercepting requests. Only request on URLSession.shared will be intercepted
     public static func resumeLocalServerOnSharedSession() {
-        URLProtocol.registerClass(LocalServerImpl.self)
+        URLProtocol.registerClass(LocalServerURLProtocol.self)
     }
 
     /// Stops intercepting requests
     public static func pauseLocalServer() {
-        URLProtocol.unregisterClass(LocalServerImpl.self)
+        URLProtocol.unregisterClass(LocalServerURLProtocol.self)
     }
 
     // MARK: - Data Providers
@@ -78,14 +78,14 @@ public class LocalServer {
 }
 
 /// An implementation of URLProtocol
-private final class LocalServerImpl: URLProtocol {
+public final class LocalServerURLProtocol: URLProtocol {
 
     /// The provider associated with this copy of the interceptor
     private let provider: ResponseProvider
 
     // MARK: - URLProtocol
 
-    override class func canInit(with request: URLRequest) -> Bool {
+    public override class func canInit(with request: URLRequest) -> Bool {
         LocalServer.getMatchingDataProvider(for: request) != nil
     }
 
@@ -104,11 +104,11 @@ private final class LocalServerImpl: URLProtocol {
         }
     }
 
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+    public override class func canonicalRequest(for request: URLRequest) -> URLRequest {
         request
     }
 
-    override func startLoading() {
+    public override func startLoading() {
         loadingTask = Task {
             do {
                 if Task.isCancelled { return }
@@ -126,7 +126,7 @@ private final class LocalServerImpl: URLProtocol {
         }
     }
 
-    override func stopLoading() {
+    public override func stopLoading() {
         loadingTask?.cancel()
     }
 }

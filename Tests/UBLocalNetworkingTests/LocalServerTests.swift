@@ -245,4 +245,30 @@ final class LocalServerTests: XCTestCase {
         task.cancel()
     }
 
+    func testCustomSession() throws {
+        let jhon = Person(name: "Jhon", age: 31)
+        try BasicResponseProvider(rule: #"https://.*/persons/.*"#, encodable: jhon).addToLocalServer()
+
+        let ex = expectation(description: "Loading")
+        let task = customSession.dataTaskPublisher(for: URL(string: "https://int.ubique.ch/persons/123")!)
+            .map({ $0.data })
+            .decode(type: Person.self, decoder: JSONDecoder())
+            .sink { completion in
+                switch completion {
+                    case .finished: ex.fulfill()
+                    case .failure(let error): XCTFail(error.localizedDescription)
+                }
+            } receiveValue: { person in
+                XCTAssertEqual(person, jhon)
+            }
+
+        waitForExpectations(timeout: 10)
+        task.cancel()
+    }
+
+    private let customSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [LocalServerURLProtocol.self]
+        return .init(configuration: configuration)
+    }()
 }
