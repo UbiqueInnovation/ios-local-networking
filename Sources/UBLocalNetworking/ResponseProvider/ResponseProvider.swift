@@ -33,7 +33,7 @@ public protocol ResponseProviderHeader {
 }
 
 /// Provides a response body
-@available(iOS 11.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
+@available(iOS 13.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 public protocol ResponseProviderBody {
     /// Returns a `Data` in response to a `URLRequest`
     /// - Parameter request: The request that needs a response body
